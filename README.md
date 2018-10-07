@@ -39,6 +39,10 @@ aws --region=us-east-1 --no-verify-ssl --endpoint-url="$kinesis_endpoint" \
     kinesis create-stream --stream-name demo --shard-count 1
 ```
 
-## TODO
+## Issues and Shortcomings
 
-Per https://github.com/awslabs/amazon-kinesis-client/issues/308#issuecomment-415466119 it is not possible to override the endpoint in the python library right now, so I'll have to do some DNS magic to make the demo work with localstack.
+[It is not possible to override aws API endpoints in the python library right now](https://github.com/awslabs/amazon-kinesis-client/issues/308#issuecomment-415466119). To point clients to local endpoints for demonstration and local development we make the following compromises:
+- Use docker links (a deprecated docker feature) to make the real AWS endpoints point to the fake local endpoints.
+- Disable SSL cert checking so that the fake endpoints self-signed certificate are accepted.
+- Run multiple localstack containers each with internal port 443 exposed, so that the fake local endpoints are all on port 443, rather than running all aws services in a single container and allowing docker to randomize ports.
+
