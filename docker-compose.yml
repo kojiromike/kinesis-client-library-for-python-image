@@ -1,0 +1,18 @@
+version: '3'
+
+volumes:
+  localstack: {}
+
+services:
+  ##
+  # Provide local faux AWS services.
+  localstack:
+    image: localstack/localstack
+    environment:
+      SERVICES: dynamodb,kinesis
+    ports:
+    - "4568"
+    - "4569"
+    - "8080"
+    volumes:
+    - "localstack:/tmp/localstack/data"

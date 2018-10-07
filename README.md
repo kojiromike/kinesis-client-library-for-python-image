@@ -24,3 +24,7 @@ COPY *.properties . # Provide a properties file per the KCL for Python docs.
 ```
 
 Then build the image. If all goes well, you'll have an image that will run your python app in the KCL.
+
+## How to Test
+
+To test that the image works as expected, we can use the sample application that awslabs provides with in the AWS Kinesis Client Library for Python repository. We don't want to require connecting to real Kinesis so we use [localstack](https://localstack.cloud/).
