@@ -27,6 +27,7 @@ services:
     - "dynamodb:/tmp/localstack/data"
   demo:
     build: .
+    command: bash -o vi
     environment:
       AWS_ACCESS_KEY_ID: demo
       AWS_SECRET_ACCESS_KEY: demo
