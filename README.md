@@ -28,3 +28,12 @@ Then build the image. If all goes well, you'll have an image that will run your 
 ## How to Test
 
 To test that the image works as expected, we can use the sample application that awslabs provides with in the AWS Kinesis Client Library for Python repository. We don't want to require connecting to real Kinesis so we use [localstack](https://localstack.cloud/).
+
+Start localstack, then get its port numbers for various services:
+
+```bash
+docker-compose up -d
+kinesis_endpoint=$(docker-compose port localstack 4568)
+kinesis_endpoint="http://localhost:${kinesis_endpoint#*:}"
+aws --region=us-east-1 --endpoint-url="$kinesis_endpoint" kinesis create-stream --stream-name demo --shard-count 1
+```

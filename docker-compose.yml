@@ -11,8 +11,8 @@ services:
     environment:
       SERVICES: dynamodb,kinesis
     ports:
-    - "4568"
-    - "4569"
-    - "8080"
+    - "4568" # Kinesis
+    - "4569" # DynamoDB
+    - "8080" # Web UI
     volumes:
     - "localstack:/tmp/localstack/data"
