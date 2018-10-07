@@ -33,7 +33,12 @@ Start localstack, then get its port numbers for various services:
 
 ```bash
 docker-compose up -d
-kinesis_endpoint=$(docker-compose port localstack 4568)
-kinesis_endpoint="http://localhost:${kinesis_endpoint#*:}"
-aws --region=us-east-1 --endpoint-url="$kinesis_endpoint" kinesis create-stream --stream-name demo --shard-count 1
+kinesis_endpoint=$(docker-compose port kinesis 443)
+kinesis_endpoint="https://localhost:${kinesis_endpoint#*:}"
+aws --region=us-east-1 --no-verify-ssl --endpoint-url="$kinesis_endpoint" \
+    kinesis create-stream --stream-name demo --shard-count 1
 ```
+
+## TODO
+
+Per https://github.com/awslabs/amazon-kinesis-client/issues/308#issuecomment-415466119 it is not possible to override the endpoint in the python library right now, so I'll have to do some DNS magic to make the demo work with localstack.

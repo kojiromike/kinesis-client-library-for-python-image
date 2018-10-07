@@ -1,18 +1,35 @@
 version: '3'
 
 volumes:
-  localstack: {}
+  kinesis: {}
+  dynamodb: {}
 
 services:
   ##
   # Provide local faux AWS services.
-  localstack:
+  kinesis:
     image: localstack/localstack
     environment:
-      SERVICES: dynamodb,kinesis
-    ports:
-    - "4568" # Kinesis
-    - "4569" # DynamoDB
-    - "8080" # Web UI
+      SERVICES: kinesis:443
+      USE_SSL: 1
+    ports:  # We need very standard-looking endpoint urls
+    - "443" # because we can't override the aws client endpoint
     volumes:
-    - "localstack:/tmp/localstack/data"
+    - "kinesis:/tmp/localstack/data"
+  dynamodb:
+    image: localstack/localstack
+    environment:
+      SERVICES: dynamodb:443
+      USE_SSL: 1
+    ports:  # We need very standard-looking endpoint urls
+    - "443" # because we can't override the aws client endpoint
+    volumes:
+    - "dynamodb:/tmp/localstack/data"
+  demo:
+    build: .
+    environment:
+      AWS_ACCESS_KEY_ID: demo
+      AWS_SECRET_ACCESS_KEY: demo
+    links:
+    - kinesis:kinesis.us-east-1.amazonaws.com
+    - dynamodb:dynamodb.us-east-1.amazonaws.com
