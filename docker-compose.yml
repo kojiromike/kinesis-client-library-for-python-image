@@ -48,3 +48,5 @@ services:
     - kinesis:kinesis.us-east-1.amazonaws.com
     - dynamodb:dynamodb.us-east-1.amazonaws.com
     - cloudwatch:monitoring.us-east-1.amazonaws.com
+    volumes:
+    - "$PWD/demo:/srv"
