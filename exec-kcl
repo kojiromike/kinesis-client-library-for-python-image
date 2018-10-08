@@ -1,0 +1,11 @@
+#!/bin/bash -x
+
+##
+# --add-modules java.xml.bind to fix an error where JaxB is not found.
+# expand $KCL_EXTRA_ARGS so that users can inject extra arguments easily.
+# expand $KCL_PROPERTIES_FILE with sample.properties from kclpy as the default.
+exec java -cp "$(amazon_kclpy_helper.py --sample --print_classpath)" \
+          --add-modules java.xml.bind \
+          $KCL_EXTRA_ARGS \
+          com.amazonaws.services.kinesis.multilang.MultiLangDaemon \
+          "${KCL_PROPERTIES_FILE:-sample.properties}"

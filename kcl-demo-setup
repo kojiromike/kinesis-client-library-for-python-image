@@ -1,0 +1,14 @@
+#!/bin/bash -x
+
+export AWS_DEFAULT_REGION=us-east-1
+export AWS_NO_VERIFY_SSL=1
+
+aws --no-verify-ssl kinesis create-stream --stream-name words --shard-count "$(( RANDOM % 6 ))"
+aws --no-verify-ssl kinesis describe-stream --stream-name words
+
+aws --no-verify-ssl kinesis put-record --stream-name words --partition-key "$RANDOM" --data foo
+aws --no-verify-ssl kinesis put-record --stream-name words --partition-key "$RANDOM" --data bar
+aws --no-verify-ssl kinesis put-record --stream-name words --partition-key "$RANDOM" --data baz
+aws --no-verify-ssl kinesis put-record --stream-name words --partition-key "$RANDOM" --data xyzzy
+aws --no-verify-ssl kinesis put-record --stream-name words --partition-key "$RANDOM" --data xyzzy
+aws --no-verify-ssl kinesis put-record --stream-name words --partition-key "$RANDOM" --data zik

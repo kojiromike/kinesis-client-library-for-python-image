@@ -3,6 +3,7 @@ version: '3'
 volumes:
   kinesis: {}
   dynamodb: {}
+  cloudwatch: {}
 
 services:
   ##
@@ -25,12 +26,25 @@ services:
     - "443" # because we can't override the aws client endpoint
     volumes:
     - "dynamodb:/tmp/localstack/data"
+  cloudwatch:
+    image: localstack/localstack
+    environment:
+      SERVICES: cloudwatch:443
+      USE_SSL: 1
+    ports:  # We need very standard-looking endpoint urls
+    - "443" # because we can't override the aws client endpoint
+    volumes:
+    - "cloudwatch:/tmp/localstack/data"
   demo:
     build: .
     command: bash -o vi
     environment:
       AWS_ACCESS_KEY_ID: demo
       AWS_SECRET_ACCESS_KEY: demo
+      AWS_CBOR_DISABLE: 1
+      KCL_EXTRA_ARGS: "-Dcom.amazonaws.sdk.disableCertChecking"
+      KCL_PROPERTIES_FILE: /srv/demo.properties
     links:
     - kinesis:kinesis.us-east-1.amazonaws.com
     - dynamodb:dynamodb.us-east-1.amazonaws.com
+    - cloudwatch:monitoring.us-east-1.amazonaws.com
