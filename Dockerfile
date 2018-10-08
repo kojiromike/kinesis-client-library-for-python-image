@@ -6,3 +6,4 @@ RUN apt-get -qqy update \
 RUN pip3 -q install amazon_kclpy \
                     awscli
 COPY exec-kcl /usr/local/bin/kcl
+ENTRYPOINT ["/usr/local/bin/kcl"]

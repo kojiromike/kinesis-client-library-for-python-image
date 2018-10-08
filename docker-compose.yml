@@ -37,7 +37,7 @@ services:
     - "cloudwatch:/tmp/localstack/data"
   demo:
     build: .
-    command: bash -o vi
+    command: /srv/kcl-demo-setup
     environment:
       AWS_ACCESS_KEY_ID: demo
       AWS_SECRET_ACCESS_KEY: demo
