@@ -1,4 +1,4 @@
-FROM openjdk:jre as kclpy
+FROM openjdk:jre-slim as kclpy
 WORKDIR /srv
 RUN apt-get -qqy update \
  && apt-get -qqy install python3 \
