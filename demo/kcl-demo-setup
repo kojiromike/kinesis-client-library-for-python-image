@@ -1,13 +1,18 @@
-#!/bin/bash -x
+#!/bin/bash
 
 export AWS_DEFAULT_REGION=us-east-1
 export AWS_NO_VERIFY_SSL=1
 
 echo 'Setting up localstack Kinesis for demo'
 
-aws --no-verify-ssl kinesis create-stream --stream-name words --shard-count "$(( RANDOM % 6 ))"
+shard_count=$(( RANDOM % 6 ))
+
+echo "Creating a stream named 'words' with a shard count of $shard_count."
+
+aws --no-verify-ssl kinesis create-stream --stream-name words --shard-count "$shard_count"
 aws --no-verify-ssl kinesis describe-stream --stream-name words
 
+echo 'Adding some random words to the stream.'
 aws --no-verify-ssl kinesis put-record --stream-name words --partition-key "$RANDOM" --data foo
 aws --no-verify-ssl kinesis put-record --stream-name words --partition-key "$RANDOM" --data bar
 aws --no-verify-ssl kinesis put-record --stream-name words --partition-key "$RANDOM" --data baz
