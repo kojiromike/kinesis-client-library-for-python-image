@@ -17,13 +17,30 @@ This product aims to save you time by providing a reliable, standard interface f
 Follow along with this example Dockerfile to see the intended use of this image as a base image:
 
 ```Dockerfile
-FROM kojiromike/kinesis-client-library-for-python-image
+FROM kojiromike/kclpy
 COPY my-package.whl . # Skip if your package is on pypi.
 RUN pip install my-package
 COPY *.properties . # Provide a properties file per the KCL for Python docs.
 ```
 
 Then build the image. If all goes well, you'll have an image that will run your python app in the KCL.
+
+## How to Build Locally
+
+The image is built automatically on the Docker hub, but if you want to build this image locally, you can run
+
+```
+make
+```
+
+which will build and tag the image, or you can run
+
+```
+docker build [args] context
+```
+
+if you want to have more control over docker build arguments.
+
 
 ## How to Test
 
@@ -38,6 +55,8 @@ kinesis_endpoint="https://localhost:${kinesis_endpoint#*:}"
 aws --region=us-east-1 --no-verify-ssl --endpoint-url="$kinesis_endpoint" \
     kinesis create-stream --stream-name demo --shard-count 1
 ```
+
+If you build the image locally, please keep in mind that `docker-compose.yml` is configured to expect the image to be tagged `kojiromike/kclpy`.
 
 ## Issues and Shortcomings
 
