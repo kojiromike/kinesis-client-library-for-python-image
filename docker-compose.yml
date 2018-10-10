@@ -36,7 +36,7 @@ services:
     volumes:
     - "cloudwatch:/tmp/localstack/data"
   demo:
-    build: .
+    build: context
     command: /srv/kcl-demo-setup
     environment:
       AWS_ACCESS_KEY_ID: demo
