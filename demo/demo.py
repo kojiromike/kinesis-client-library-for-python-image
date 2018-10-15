@@ -17,9 +17,9 @@ class RecordProcessor(sample_kclpy_app.RecordProcessor):
     :param int sequence_number: The sequence number associated with this record.
     :param int sub_sequence_number: the sub sequence number associated with this record.
     """
-    logging.info("Here is what a logging message with a data of '%s' looks like.", data)
-    print("Here is what it looks like when we print to stdout: data='{}'".format(data))
-    print("Here is what it looks like when we print to stderr: data='{}'".format(data), file=sys.stderr)
+    logging.info('Here is what a logging message with a data of "%s" looks like.', data)
+    print('Here is what it looks like when we print to stdout: data="{}"'.format(data), flush=True)
+    print('Here is what it looks like when we print to stderr: data="{}"'.format(data), file=sys.stderr)
 
 if __name__ == "__main__":
   kcl_process = kcl.KCLProcess(RecordProcessor())
