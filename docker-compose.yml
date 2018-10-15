@@ -1,9 +1,8 @@
-version: '3'
+version: "3"
 
 volumes:
   kinesis: {}
   dynamodb: {}
-  cloudwatch: {}
 
 services:
   ##
@@ -13,28 +12,19 @@ services:
     environment:
       SERVICES: kinesis:443
       USE_SSL: 1
-    ports:  # We need very standard-looking endpoint urls
-    - "443" # because we can't override the aws client endpoint
+    ports: # We need very standard-looking endpoint urls
+      - "443" # because we can't override the aws client endpoint
     volumes:
-    - "kinesis:/tmp/localstack/data"
+      - "kinesis:/tmp/localstack/data"
   dynamodb:
     image: localstack/localstack
     environment:
       SERVICES: dynamodb:443
       USE_SSL: 1
-    ports:  # We need very standard-looking endpoint urls
-    - "443" # because we can't override the aws client endpoint
+    ports: # We need very standard-looking endpoint urls
+      - "443" # because we can't override the aws client endpoint
     volumes:
-    - "dynamodb:/tmp/localstack/data"
-  cloudwatch:
-    image: localstack/localstack
-    environment:
-      SERVICES: cloudwatch:443
-      USE_SSL: 1
-    ports:  # We need very standard-looking endpoint urls
-    - "443" # because we can't override the aws client endpoint
-    volumes:
-    - "cloudwatch:/tmp/localstack/data"
+      - "dynamodb:/tmp/localstack/data"
   demo:
     image: kojiromike/kclpy
     command: /srv/kcl-demo-setup
@@ -45,8 +35,7 @@ services:
       KCL_EXTRA_ARGS: "-Dcom.amazonaws.sdk.disableCertChecking"
       KCL_PROPERTIES_FILE: /srv/demo.properties
     links:
-    - kinesis:kinesis.us-east-1.amazonaws.com
-    - dynamodb:dynamodb.us-east-1.amazonaws.com
-    - cloudwatch:monitoring.us-east-1.amazonaws.com
+      - kinesis:kinesis.us-east-1.amazonaws.com
+      - dynamodb:dynamodb.us-east-1.amazonaws.com
     volumes:
-    - "$PWD/demo:/srv"
+      - "$PWD/demo:/srv"
