@@ -4,4 +4,4 @@ all: build
 
 
 build:
-	docker build -t kojiromike/kcl context
+	docker build -t kojiromike/kclpy context
