@@ -58,6 +58,24 @@ aws --region=us-east-1 --no-verify-ssl --endpoint-url="$kinesis_endpoint" \
 
 If you build the image locally, please keep in mind that `docker-compose.yml` is configured to expect the image to be tagged `kojiromike/kclpy`.
 
+
+## Running your own Program
+
+### Writing Your Program
+
+Implement [the RecordProcessor interface](https://docs.aws.amazon.com/streams/latest/dev/kinesis-record-processor-implementation-app-py.html#kinesis-record-processor-implementation-interface-py). Beware that there are two versions, which have somewhat different interfaces. You can code to whichever version suits you.
+
+### Installing your Program
+
+This image is designed for you to easily install a Python 3 package from a compatible repository. If your package is open source and available on pypi, then you can just
+
+```
+pip install your-package
+```
+
+Pip will run in [user mode](https://pip.pypa.io/en/stable/user_guide/#user-installs), so you don't need root privileges. The package will be installed in `/home/user/.local`, but you don't need to do anything special -- the environment is configured for user-mode python.
+
+
 ## Issues and Shortcomings
 
 [It is not possible to override aws API endpoints in the python library right now](https://github.com/awslabs/amazon-kinesis-client/issues/308#issuecomment-415466119). We make the following compromises to point clients to local endpoints for demonstration and local development purposes:
