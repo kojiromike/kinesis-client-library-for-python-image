@@ -7,7 +7,9 @@ WORKDIR /srv
 RUN apt-get -qqy update \
  && apt-get -qqy install python3 \
                          python3-pip \
- && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/* \
+ && type python3 \
+ && python3 --version
 
 COPY exec-kcl /usr/local/bin/kcl
 ENTRYPOINT ["/usr/local/bin/kcl"]
@@ -22,4 +24,7 @@ ENV PATH=$PATH:/home/user/.local/bin \
     PIP_USER=1
 RUN pip3 install --upgrade pip setuptools \
  && type pip \
- && pip install amazon_kclpy awscli
+ && pip --version
+RUN pip install amazon_kclpy awscli \
+ && type aws \
+ && aws --version
