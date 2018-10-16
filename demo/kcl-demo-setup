@@ -5,7 +5,7 @@ export AWS_NO_VERIFY_SSL=1
 
 echo 'Setting up localstack Kinesis for demo'
 
-shard_count=$(( RANDOM % 6 ))
+shard_count=$(( 1 + (RANDOM % 6) ))
 
 echo "Creating a stream named 'words' with a shard count of $shard_count."
 
