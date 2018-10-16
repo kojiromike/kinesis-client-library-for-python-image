@@ -2,7 +2,8 @@
 # This is the main Dockerfile for the kclpy image.
 # Please avoid putting demo-only tools and
 # configuration in here.
-FROM openjdk:jre-slim as kclpy
+FROM openjdk:8-jre-slim-stretch as kclpy
+RUN java -version
 WORKDIR /srv
 RUN apt-get -qqy update \
  && apt-get -qqy install python3 \
