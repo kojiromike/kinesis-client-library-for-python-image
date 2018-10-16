@@ -16,7 +16,10 @@ ENTRYPOINT ["/usr/local/bin/kcl"]
 RUN useradd -m user \
  && chown -R user:user /srv
 USER user
-ENV PIP_USER=1 \
-    PATH=$PATH:/home/user/.local/bin
-RUN pip3 --no-cache-dir -q install amazon_kclpy \
-                                   awscli
+ENV PATH=$PATH:/home/user/.local/bin \
+    PIP_NO_CACHE_DIR=off \
+    PIP_QUIET=1 \
+    PIP_USER=1
+RUN pip3 install --upgrade pip setuptools \
+ && type pip \
+ && pip install amazon_kclpy awscli
