@@ -5,6 +5,10 @@ export AWS_NO_VERIFY_SSL=1
 
 echo 'Setting up localstack Kinesis for demo'
 
+echo
+echo 'Installing awscli to help set up the demo'
+pip install -q awscli
+
 shard_count=$(( 1 + (RANDOM % 6) ))
 
 echo "Creating a stream named 'words' with a shard count of $shard_count."

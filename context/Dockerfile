@@ -25,7 +25,5 @@ ENV PATH=$PATH:/home/user/.local/bin \
     PIP_USER=1
 RUN pip3 install --upgrade pip setuptools \
  && type pip \
- && pip --version
-RUN pip install amazon_kclpy awscli \
- && type aws \
- && aws --version
+ && pip --version \
+ && pip install amazon_kclpy
