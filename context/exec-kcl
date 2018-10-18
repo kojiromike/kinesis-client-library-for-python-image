@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 
 main() {
   if [ $# -gt 0 ]; then
